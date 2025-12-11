@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const Header = () => {
-  const [searchInput, setSearchInput] = useState();
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <>
@@ -18,7 +18,7 @@ const Header = () => {
           />
         </div>
         <div>
-          <img src="#" alt="User porfile image" />
+          <img src="#" alt="User profile image" />
           <p>##UserName</p>
         </div>
       </header>

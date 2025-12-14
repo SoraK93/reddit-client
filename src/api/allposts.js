@@ -17,7 +17,6 @@ const getAllPosts = async () => {
     // const response = await fetch(fetchAPI.allPostLink.url);
     const data = await response.json();
     const allPosts = data.data.children;
-    console.log(allPosts);
     return allPosts;
   } catch (error) {
     console.log(error);

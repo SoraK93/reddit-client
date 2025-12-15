@@ -21,8 +21,10 @@ const SinglePost = ({ renderPostData }) => {
           </video>
         );
         break;
-      case "links":
-        media = <img src="" alt="" />;
+      case "link":
+        console.log(post.data)
+        media = <a href={post.data.url}>{post.data.url}</a>;
+        break;
     }
 
     return (

@@ -1,18 +1,6 @@
-import { useEffect, useState } from "react";
-import { getAllPosts } from "../../api/allposts";
 import { SinglePost } from "../SinglePost/SinglePost";
 
-const Posts = () => {
-  const [newPost, setNewPost] = useState([]);
-
-  useEffect(() => {
-    const fetchPost = async () => {
-      const response = await getAllPosts();
-      setNewPost(...newPost, response);
-    };
-    fetchPost();
-  }, []);
-
+const Posts = ({ newPost }) => {
   const renderPostData = newPost.slice(0, 10);
 
   return (

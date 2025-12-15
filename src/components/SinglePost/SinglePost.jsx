@@ -1,3 +1,5 @@
+import style from "./SinglePost.module.css";
+
 const SinglePost = ({ renderPostData }) => {
   return renderPostData.slice(0, 10).map((post) => {
     const mediaType = post.data.post_hint;
@@ -22,7 +24,6 @@ const SinglePost = ({ renderPostData }) => {
         );
         break;
       case "link":
-        console.log(post.data)
         media = <a href={post.data.url}>{post.data.url}</a>;
         break;
     }
@@ -37,7 +38,7 @@ const SinglePost = ({ renderPostData }) => {
             </div>
             <h2>{post.data.title}</h2>
           </div>
-          <div>{media}</div>
+          <div className={style.media}>{media}</div>
         </article>
       </li>
     );

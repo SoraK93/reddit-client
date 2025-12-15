@@ -1,8 +1,8 @@
 import "./App.css";
-import { Header } from "../pages/Header/Header";
-import { Footer } from "../pages/Footer/Footer";
-import { Posts } from "../pages/posts/Posts";
-import { Community } from "../pages/community/Community";
+import { Header } from "../components/Header/Header";
+import { Footer } from "../components/Footer/Footer";
+import { Posts } from "../components/posts/Posts";
+import { Community } from "../components/community/Community";
 
 function App() {
   return (

@@ -1,0 +1,8 @@
+#root {
+  text-align: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}

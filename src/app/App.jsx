@@ -26,11 +26,13 @@ function App() {
       const img = post.data.sr_detail;
       sub.push({
         thumbnail: {
-          url: img.header_img || img.icon_img || img.community_icon?.replace(/&amp;/g, "&"),
+          url:
+            img.header_img ||
+            img.icon_img ||
+            img.community_icon?.replace(/&amp;/g, "&"),
         },
         subreddit: post.data.subreddit_name_prefixed,
       });
-      console.log("ok")
     }
     setSubreddit(sub);
   }, [newPost]);
@@ -39,8 +41,14 @@ function App() {
     <>
       <Header />
       <main>
-        {newPost.length > 0 ? <Posts newPost={newPost} /> : <h2>Loading...</h2>}
-        {subreddit.length > 0 && <Community community={subreddit} />}
+        {newPost.length > 0 && subreddit.length > 0 ? (
+          <>
+            <Posts newPost={newPost} sub={subreddit} />
+            <Community community={subreddit} />
+          </>
+        ) : (
+          <h2>Loading...</h2>
+        )}
       </main>
       <Footer />
     </>

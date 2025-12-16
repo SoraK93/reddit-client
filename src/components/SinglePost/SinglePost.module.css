@@ -1,5 +1,27 @@
+li {
+  list-style-type: none;
+}
+
 article {
   border: 1px solid black;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 60% 40%;
+}
+
+.postTitle {
+  grid-column: span 2;
+  display: flex;
+}
+
+.authorDetail {
+  display: flex;
+  width: 100%;
+}
+.authorDetail img {
+  width: 40px;
+  height:45px;
+  border-radius: 50%;
 }
 
 .media img {

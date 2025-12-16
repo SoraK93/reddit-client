@@ -1,16 +1,17 @@
 import style from "./SinglePost.module.css";
 
-const SinglePost = ({ renderPostData }) => {
-  return renderPostData.slice(0, 10).map((post) => {
-    const mediaType = post.data.post_hint;
-    let media;
+const SinglePost = ({ renderPostData, sub }) => {
+  return renderPostData.slice(0, 10).map((post, index) => {
+    const data = post.data
+    const mediaType = data.post_hint;
+    let media, image;
 
     switch (mediaType) {
       case "image":
-        media = <img src={post.data.url} alt="#" />;
+        media = <img src={data.url} alt="#" />;
         break;
       case "hosted:video":
-        let source = post.data.secure_media?.reddit_video;
+        let source = data.secure_media?.reddit_video;
         media = (
           <video
             width={source.width}
@@ -24,19 +25,27 @@ const SinglePost = ({ renderPostData }) => {
         );
         break;
       case "link":
-        media = <a href={post.data.url}>{post.data.url}</a>;
+        media = <a href={data.url}>{data.url}</a>;
         break;
     }
 
+    if (data.subreddit_name_prefixed === sub[index].subreddit) {
+      image = <img src={sub[index].thumbnail.url} alt="" />
+    }
+
+    console.log(image)
     return (
-      <li key={post.data.id} id={post.data.id}>
+      <li key={data.id} id={data.id}>
         <article>
-          <div>
-            <div>
-              <p>{post.data.author}</p>
-              <p>{`r/${post.data.subreddit}`}</p>
+          <div className={style.postTitle}>
+            <div className={style.authorDetail}>
+              {image}
+              <div className={style.authorName}>
+                <p>{data.author}</p>
+                <p>{`r/${data.subreddit}`}</p>
+              </div>
             </div>
-            <h2>{post.data.title}</h2>
+            <h2>{data.title}</h2>
           </div>
           <div className={style.media}>{media}</div>
         </article>

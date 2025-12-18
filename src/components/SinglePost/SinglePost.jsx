@@ -33,7 +33,6 @@ const SinglePost = ({ renderPostData, sub }) => {
       image = <img src={sub[index].thumbnail.url} alt="" />
     }
 
-    console.log(image)
     return (
       <li key={data.id} id={data.id}>
         <article>

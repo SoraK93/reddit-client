@@ -1,26 +1,29 @@
-const fetchAPI = {
-  allPostLink: {
-    data: "/data/allposts.json",
-    url: "https://www.reddit.com/r/all.json",
-  },
-  post_comment: "/data/post_comment.json",
-  // https://www.reddit.com/r/FFXVI/comments/1pj09nu/can_we_talk_about_this_squareenix/{comments/.json}
-  user: "/data/user.json",
-  // https://www.reddit.com/user/userName{.json}
-  subreddit: "/data/subreddit.json",
-  // https://www.reddit.com/r/subreddit{.json}
-};
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { fetchAPI } from "./fetchLinks";
 
-const getAllPosts = async () => {
-  try {
-    const response = await fetch(fetchAPI.allPostLink.data);
-    // const response = await fetch(fetchAPI.allPostLink.url);
-    const data = await response.json();
-    const allPosts = data.data.children;
-    return allPosts;
-  } catch (error) {
-    console.log(error);
+const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
+  const response = await fetch(fetchAPI.allPostLink.data);
+  // const response = await fetch(fetchAPI.allPostLink.url);
+  const posts = (await response.json()).data.children;
+
+  const subreddit = [];
+
+  for (let post of posts) {
+    if (subreddit.length >= 10) break;
+    const img = post.data.sr_detail;
+    subreddit.push({
+      id: img.name,
+      thumbnail: {
+        url:
+          img.header_img ||
+          img.icon_img ||
+          img.community_icon?.replace(/&amp;/g, "&"),
+      },
+      name_prefix: post.data.subreddit_name_prefixed,
+    });
   }
-};
 
-export { getAllPosts };
+  return { posts, subreddit };
+});
+
+export { fetchAllPosts };

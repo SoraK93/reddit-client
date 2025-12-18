@@ -1,4 +1,4 @@
-import { SinglePost } from "../SinglePost/SinglePost";
+import { SinglePost } from "./components/SinglePost";
 import style from "./Post.module.css"
 
 const Posts = ({ newPost, sub }) => {

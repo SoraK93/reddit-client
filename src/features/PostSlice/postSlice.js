@@ -6,17 +6,19 @@ const postSlice = createSlice({
   initialState: {
     status: "uninitialized",
     allPost: [],
+    subreddit: [],
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllPosts.pending, (state, action) => {
+      .addCase(fetchAllPosts.pending, (state, _) => {
         state.status = "loading";
       })
       .addCase(fetchAllPosts.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        state.allPost = action.payload;
+        state.allPost = action.payload.posts;
+        state.subreddit = action.payload.subreddit;
       })
       .addCase(fetchAllPosts.rejected, (state, action) => {
         state.status = "failed";
@@ -26,4 +28,9 @@ const postSlice = createSlice({
   },
 });
 
+export const selectStatus = (state) => state.post.status;
+export const selectAllPost = (state) => state.post.allPost;
+export const selectError = (state) => state.post.error;
+export const selectSubreddit = (state) => state.post.subreddit;
 
+export default postSlice.reducer;

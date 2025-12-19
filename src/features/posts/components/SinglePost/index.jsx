@@ -29,7 +29,7 @@ const SinglePost = ({ renderPostData, sub }) => {
         break;
     }
 
-    if (data.subreddit_name_prefixed === sub[index].subreddit) {
+    if (data.subreddit_name_prefixed === sub[index].name_prefix) {
       image = <img src={sub[index].thumbnail.url} alt="" />
     }
 

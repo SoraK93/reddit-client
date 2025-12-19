@@ -1,13 +1,11 @@
 import { SinglePost } from "./components/SinglePost";
-import style from "./Post.module.css"
+import style from "./Post.module.css";
 
-const Posts = ({ newPost, sub }) => {
-  const renderPostData = newPost.slice(0, 10);
-
+const Posts = () => {
   return (
     <div>
       <ul>
-        <SinglePost renderPostData={renderPostData} sub={sub} />
+        <SinglePost />
       </ul>
     </div>
   );

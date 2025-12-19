@@ -4,11 +4,7 @@ import { Footer } from "../components/Footer/Footer";
 import { Posts } from "../features/posts/Posts";
 import { Community } from "../components/community/Community";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectAllPost,
-  selectStatus,
-  selectSubreddit,
-} from "../features/posts/postSlice/postSlice";
+import { selectStatus } from "../features/posts/postSlice/postSlice";
 import { useEffect } from "react";
 import { fetchAllPosts } from "../api/allposts";
 
@@ -17,10 +13,8 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchAllPosts());
-  }, [])
+  }, []);
 
-  const newPost = useSelector(selectAllPost);
-  const subreddit = useSelector(selectSubreddit);
   const status = useSelector(selectStatus);
 
   return (
@@ -29,8 +23,8 @@ function App() {
       <main>
         {status === "fulfilled" ? (
           <>
-            <Posts newPost={newPost} sub={subreddit} />
-            <Community community={subreddit} />
+            <Posts />
+            <Community />
           </>
         ) : (
           <h2>Loading...</h2>

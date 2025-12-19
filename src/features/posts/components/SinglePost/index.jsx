@@ -1,6 +1,11 @@
+import { useSelector } from "react-redux";
 import style from "./SinglePost.module.css";
+import { selectAllPost, selectSubreddit } from "../../postSlice/postSlice";
 
-const SinglePost = ({ renderPostData, sub }) => {
+const SinglePost = () => {
+  const renderPostData = useSelector(selectAllPost);
+  const sub = useSelector(selectSubreddit);
+
   return renderPostData.slice(0, 10).map((post, index) => {
     const data = post.data
     const mediaType = data.post_hint;

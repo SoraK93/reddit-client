@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchAPI } from "./fetchLinks";
 
 const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
-  const response = await fetch(fetchAPI.allPostLink.data);
-  // const response = await fetch(fetchAPI.allPostLink.url);
+  // const response = await fetch(fetchAPI.allPostLink.data);
+  const response = await fetch(fetchAPI.allPostLink.url);
   const posts = (await response.json()).data.children;
 
   const subreddit = [];
@@ -26,4 +26,16 @@ const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
   return { posts, subreddit };
 });
 
-export { fetchAllPosts };
+// https://www.reddit.com/{subreddit}.json
+const fetchSubredditPost = createAsyncThunk(
+  "post/fetchSubredditPost",
+  async (subreddit) => {
+    // const response = await fetch(fetchAPI.subreddit);
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+    console.log(subreddit);
+    const posts = (await response.json()).data.children;
+    return { posts };
+  }
+);
+
+export { fetchAllPosts, fetchSubredditPost };

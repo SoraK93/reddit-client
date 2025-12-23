@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllPosts } from "../../../api/allposts";
+import { fetchAllPosts, fetchSubredditPost } from "../../../api/allposts";
 
 const postSlice = createSlice({
   name: "post",
@@ -12,6 +12,7 @@ const postSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Status cases for fetching all posts
       .addCase(fetchAllPosts.pending, (state, _) => {
         state.status = "loading";
       })
@@ -23,6 +24,22 @@ const postSlice = createSlice({
       .addCase(fetchAllPosts.rejected, (state, action) => {
         state.status = "failed";
         state.allPost = [];
+        state.subreddit = [];
+        state.error = action.error;
+      })
+
+      // Status cases for fetching specific subreddit posts
+      .addCase(fetchSubredditPost.pending, (state, _) => {
+        state.status = "loading";
+      })
+      .addCase(fetchSubredditPost.fulfilled, (state, action) => {
+        state.status = "fulfilled";
+        state.allPost = action.payload.posts;
+      })
+      .addCase(fetchSubredditPost.rejected, (state, action) => {
+        state.status = "failed";
+        state.allPost = [];
+        state.subreddit = [];
         state.error = action.error;
       });
   },

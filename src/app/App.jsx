@@ -6,14 +6,18 @@ import { Community } from "../components/community/Community";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStatus } from "../features/posts/postSlice/postSlice";
 import { useEffect } from "react";
-import { fetchAllPosts } from "../api/allposts";
+import { fetchAllPosts, fetchSubredditPost } from "../api/allposts";
+import { useParams } from "react-router";
 
 function App() {
   const dispatch = useDispatch();
+  const { subreddit } = useParams();
 
   useEffect(() => {
-    dispatch(fetchAllPosts());
-  }, []);
+    subreddit
+      ? dispatch(fetchSubredditPost(subreddit))
+      : dispatch(fetchAllPosts());
+  }, [dispatch, subreddit]);
 
   const status = useSelector(selectStatus);
 

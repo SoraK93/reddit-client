@@ -1,5 +1,6 @@
 import { useState } from "react";
-import style from "./header.module.css"
+import style from "./header.module.css";
+import { Link } from "react-router";
 
 const Header = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -8,7 +9,9 @@ const Header = () => {
     <>
       <header>
         <div className={style.logo}>
-          <img src="src\assets\logo.png" alt="Reddit Logo" />
+          <Link to="/">
+            <img src="src\assets\logo.png" alt="Reddit Logo" />
+          </Link>
         </div>
         <div className={style.search}>
           <input

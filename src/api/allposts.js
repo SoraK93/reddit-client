@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchAPI } from "./fetchLinks";
+import { API_ENDPOINT } from "./fetchLinks";
 
+// Gets 10 hot & recent posts
 const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
-  // const response = await fetch(fetchAPI.allPostLink.data);
-  const response = await fetch(fetchAPI.allPostLink.url);
+  const response = await fetch(`${API_ENDPOINT}/all.json?sr_detail=1.json`);
   const posts = (await response.json()).data.children;
 
   const subreddit = [];
@@ -26,12 +26,11 @@ const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
   return { posts, subreddit };
 });
 
-// https://www.reddit.com/{subreddit}.json
+// Gets the subreddit that has made the most recent community post
 const fetchSubredditPost = createAsyncThunk(
   "post/fetchSubredditPost",
   async (subreddit) => {
-    // const response = await fetch(fetchAPI.subreddit);
-    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+    const response = await fetch(`${API_ENDPOINT}/${subreddit}.json`);
     console.log(subreddit);
     const posts = (await response.json()).data.children;
     return { posts };
@@ -39,3 +38,4 @@ const fetchSubredditPost = createAsyncThunk(
 );
 
 export { fetchAllPosts, fetchSubredditPost };
+

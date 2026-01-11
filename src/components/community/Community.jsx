@@ -6,13 +6,11 @@ import { useNavigate } from "react-router";
 
 const Community = () => {
   const community = useSelector(selectSubreddit);
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleOnClick = (e) => {
     const targetSubreddit = e.target.textContent;
     navigate(`/${targetSubreddit}`);
-    // dispatch(fetchSubredditPost(targetSubreddit))
   };
 
   return (

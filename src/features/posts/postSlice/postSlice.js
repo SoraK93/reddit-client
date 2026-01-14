@@ -1,5 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllPosts, fetchSubredditPost } from "../../../api/allposts";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import {
+  fetchAllPosts,
+  fetchSubredditPost,
+} from "../../../api/redditAPI";
+
+const handlePending = (state) => {
+  state.status = "loading";
+};
+
+const handleRejected = (state, action) => {
+  state.status = "failed";
+  state.allPost = [];
+  state.subreddit = [];
+  state.error = action.error;
+};
 
 const postSlice = createSlice({
   name: "post",
@@ -13,35 +27,34 @@ const postSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Status cases for fetching all posts
-      .addCase(fetchAllPosts.pending, (state, _) => {
-        state.status = "loading";
-      })
       .addCase(fetchAllPosts.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.allPost = action.payload.posts;
         state.subreddit = action.payload.subreddit;
       })
-      .addCase(fetchAllPosts.rejected, (state, action) => {
-        state.status = "failed";
-        state.allPost = [];
-        state.subreddit = [];
-        state.error = action.error;
-      })
 
       // Status cases for fetching specific subreddit posts
-      .addCase(fetchSubredditPost.pending, (state, _) => {
-        state.status = "loading";
-      })
       .addCase(fetchSubredditPost.fulfilled, (state, action) => {
         state.status = "fulfilled";
         state.allPost = action.payload.posts;
       })
-      .addCase(fetchSubredditPost.rejected, (state, action) => {
-        state.status = "failed";
-        state.allPost = [];
-        state.subreddit = [];
-        state.error = action.error;
-      });
+
+      // handles all pending fetch calls
+      .addMatcher(
+        isAnyOf(
+          fetchAllPosts.pending,
+          fetchSubredditPost.pending,
+        ),
+        handlePending
+      )
+
+      .addMatcher(
+        isAnyOf(
+          fetchAllPosts.rejected,
+          fetchSubredditPost.rejected,
+        ),
+        handleRejected
+      );
   },
 });
 

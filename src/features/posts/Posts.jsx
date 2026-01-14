@@ -1,11 +1,11 @@
-import { SinglePost } from "./components/SinglePost";
+import { AllPost } from "./components/AllPost";
 import style from "./Post.module.css";
 
 const Posts = () => {
   return (
     <div>
       <ul>
-        <SinglePost />
+        <AllPost />
       </ul>
     </div>
   );

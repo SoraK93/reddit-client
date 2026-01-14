@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
-import style from "./SinglePost.module.css";
+import style from "./AllPost.module.css";
 import { selectAllPost, selectSubreddit } from "../../postSlice/postSlice";
 
-const SinglePost = () => {
-  const renderPostData = useSelector(selectAllPost);
-  const sub = useSelector(selectSubreddit);
+const AllPost = () => {
+  const allPostData = useSelector(selectAllPost);
+  const subreddit = useSelector(selectSubreddit);
+  
 
-  return renderPostData.slice(0, 10).map((post, index) => {
-    const data = post.data
+  return allPostData.slice(0, 10).map((post, index) => {
+    const data = post.data;
     const mediaType = data.post_hint;
     let media, image;
 
@@ -34,12 +35,15 @@ const SinglePost = () => {
         break;
     }
 
-    if (data.subreddit_name_prefixed === sub[index].name_prefix) {
-      image = <img src={sub[index].thumbnail.url} alt="" />
+    if (data.subreddit_name_prefixed === subreddit[index].name_prefix) {
+      image = <img src={subreddit[index].thumbnail.url} alt="" />;
     }
 
     return (
-      <li key={data.id} id={data.id}>
+      <li
+        key={data.id}
+        id={data.id}
+      >
         <article>
           <div className={style.postTitle}>
             <div className={style.authorDetail}>
@@ -58,4 +62,4 @@ const SinglePost = () => {
   });
 };
 
-export { SinglePost };
+export { AllPost };

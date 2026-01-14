@@ -14,7 +14,7 @@ const Community = () => {
   };
 
   return (
-    <section>
+    <section className={style.communitySection}>
       <div>
         <h2>Recent Community Post</h2>
       </div>

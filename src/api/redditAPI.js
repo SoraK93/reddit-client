@@ -31,11 +31,31 @@ const fetchSubredditPost = createAsyncThunk(
   "post/fetchSubredditPost",
   async (subreddit) => {
     const response = await fetch(`${API_ENDPOINT}/${subreddit}.json`);
-    console.log(subreddit);
     const posts = (await response.json()).data.children;
+
     return { posts };
   }
 );
 
-export { fetchAllPosts, fetchSubredditPost };
+const fetchPostComments = createAsyncThunk(
+  "post/fetchPostComments",
+  async ({ subreddit, id }) => {
+    try {
+      const response = await fetch(
+        `${API_ENDPOINT}/${subreddit}/comments/${id}.json`
+      );
 
+      const postComments = await response.json();
+      let [post, comments] = postComments;
+
+      post = post.data.children[0].data;
+      comments = comments.data.children.slice(0, 10);
+
+      return { post, comments };
+    } catch (err) {
+      console.error(err);
+    }
+  }
+);
+
+export { fetchAllPosts, fetchSubredditPost, fetchPostComments };

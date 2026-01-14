@@ -1,6 +1,7 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import {
   fetchAllPosts,
+  fetchPostComments,
   fetchSubredditPost,
 } from "../../../api/redditAPI";
 
@@ -44,6 +45,7 @@ const postSlice = createSlice({
         isAnyOf(
           fetchAllPosts.pending,
           fetchSubredditPost.pending,
+          fetchPostComments.pending
         ),
         handlePending
       )
@@ -52,6 +54,7 @@ const postSlice = createSlice({
         isAnyOf(
           fetchAllPosts.rejected,
           fetchSubredditPost.rejected,
+          fetchPostComments.rejected
         ),
         handleRejected
       );

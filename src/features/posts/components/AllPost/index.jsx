@@ -1,11 +1,22 @@
 import { useSelector } from "react-redux";
 import style from "./AllPost.module.css";
 import { selectAllPost, selectSubreddit } from "../../postSlice/postSlice";
+import { useNavigate } from "react-router";
 
 const AllPost = () => {
   const allPostData = useSelector(selectAllPost);
   const subreddit = useSelector(selectSubreddit);
-  
+  const navigate = useNavigate();
+
+  const handleOnClick = (e) => {
+    e.stopPropagation();
+
+    const targetedPost = e.target.closest("li");
+    const id = targetedPost.id;
+    const subredditName = targetedPost.dataset.subreddit.slice(2);
+
+    navigate(`/r/${subredditName}/comments/${id}`);
+  };
 
   return allPostData.slice(0, 10).map((post, index) => {
     const data = post.data;
@@ -43,8 +54,9 @@ const AllPost = () => {
       <li
         key={data.id}
         id={data.id}
+        data-subreddit={data.subreddit_name_prefixed}
       >
-        <article>
+        <article onClick={handleOnClick}>
           <div className={style.postTitle}>
             <div className={style.authorDetail}>
               {image}

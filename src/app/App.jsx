@@ -2,22 +2,31 @@ import "./App.module.css";
 import { Header } from "../components/Header/Header";
 import { Footer } from "../components/Footer/Footer";
 import { Posts } from "../features/posts/Posts";
-import { Community } from "../components/community/Community";
+import { Community } from "../features/community";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStatus } from "../features/posts/postSlice/postSlice";
 import { useEffect } from "react";
-import { fetchAllPosts, fetchSubredditPost } from "../api/allposts";
+import {
+  fetchAllPosts,
+  fetchPostComments,
+  fetchSubredditPost,
+} from "../api/redditAPI";
 import { useParams } from "react-router";
 
 function App() {
   const dispatch = useDispatch();
-  const { subreddit } = useParams();
+  const { subreddit, id } = useParams();
 
   useEffect(() => {
-    subreddit
-      ? dispatch(fetchSubredditPost(subreddit))
-      : dispatch(fetchAllPosts());
-  }, [dispatch, subreddit]);
+    console.log(subreddit, id);
+    if (subreddit && id) {
+      dispatch(fetchPostComments({ subreddit, id }));
+    } else if (subreddit) {
+      dispatch(fetchSubredditPost(subreddit));
+    } else {
+      dispatch(fetchAllPosts());
+    }
+  }, [dispatch, subreddit, id]);
 
   const status = useSelector(selectStatus);
 

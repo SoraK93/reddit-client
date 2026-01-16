@@ -1,12 +1,10 @@
-import { AllPost } from "./components/AllPost";
-import style from "./Post.module.css";
+import { Outlet } from "react-router";
+import "./Post.module.css";
 
 const Posts = () => {
   return (
     <div>
-      <ul>
-        <AllPost />
-      </ul>
+        <Outlet />
     </div>
   );
 };

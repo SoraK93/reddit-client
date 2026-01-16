@@ -3,13 +3,18 @@ import { API_ENDPOINT } from "./fetchLinks";
 
 // Gets 10 hot & recent posts
 const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
-  const response = await fetch(`${API_ENDPOINT}/all.json?sr_detail=1.json`);
-  const posts = (await response.json()).data.children;
+  let response, posts;
+
+  try {
+    response = await fetch(`${API_ENDPOINT}/all.json?sr_detail=1.json`);
+    posts = (await response.json()).data.children;
+  } catch (err) {
+    console.error(err);
+  }
 
   const subreddit = [];
 
   for (let post of posts) {
-    if (subreddit.length >= 10) break;
     const img = post.data.sr_detail;
     subreddit.push({
       id: img.name,
@@ -21,6 +26,8 @@ const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
       },
       name_prefix: post.data.subreddit_name_prefixed,
     });
+
+    if (subreddit.length === 10) break;
   }
 
   return { posts, subreddit };
@@ -30,10 +37,14 @@ const fetchAllPosts = createAsyncThunk("post/fetchAllPosts", async () => {
 const fetchSubredditPost = createAsyncThunk(
   "post/fetchSubredditPost",
   async (subreddit) => {
-    const response = await fetch(`${API_ENDPOINT}/${subreddit}.json`);
-    const posts = (await response.json()).data.children;
+    try {
+      const response = await fetch(`${API_ENDPOINT}/${subreddit}.json`);
+      const posts = (await response.json()).data.children;
 
-    return { posts };
+      return { posts };
+    } catch (err) {
+      console.error(err);
+    }
   }
 );
 

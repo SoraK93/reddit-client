@@ -33,6 +33,7 @@ const createCommentList = (comments) => {
     const data = comment.data;
 
     const currentComment = {
+      id: data.id,
       author: data.author,
       comment: data.body,
       replies: null,

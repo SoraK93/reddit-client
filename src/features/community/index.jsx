@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import style from "./Community.module.css";
 import { selectSubreddit } from "../posts/postSlice/postSlice";
-import { fetchSubredditPost } from "../../api/redditAPI";
 import { useNavigate } from "react-router";
 
 const Community = () => {

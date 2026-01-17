@@ -1,1 +1,1 @@
-export const API_ENDPOINT = "https://www.reddit.com/r"
+export const API_ENDPOINT = "/api/reddit/r"

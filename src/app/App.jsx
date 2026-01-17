@@ -18,7 +18,6 @@ function App() {
   const { subreddit, id } = useParams();
 
   useEffect(() => {
-    console.log(subreddit, id);
     if (subreddit && id) {
       dispatch(fetchPostComments({ subreddit, id }));
     } else if (subreddit) {

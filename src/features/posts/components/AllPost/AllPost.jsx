@@ -15,7 +15,7 @@ const handleOnClick = (e, navigate) => {
 const PostList = ({ allPostData, subreddit }) => {
   const navigate = useNavigate();
 
-  return allPostData.slice(0, 10).map((post, index) => {
+  return allPostData.map((post, index) => {
     const data = post.data;
     const mediaType = data.post_hint;
 

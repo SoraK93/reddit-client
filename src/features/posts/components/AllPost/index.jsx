@@ -8,7 +8,7 @@ const AllPost = () => {
 
   return (
     <ul>
-      <PostList allPostData={allPostData} subreddit={subreddit} />
+      <PostList allPostData={allPostData.slice(0, 10)} subreddit={subreddit} />
     </ul>
   );
 };

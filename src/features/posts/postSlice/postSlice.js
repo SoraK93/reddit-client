@@ -52,8 +52,10 @@ const postSlice = createSlice({
 
       .addCase(fetchPostComments.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        state.current.post = action.payload.post;
-        state.current.comments = action.payload.comments;
+        state.current = {
+          post: action.payload.post,
+          comments: action.payload.comments,
+        };
         state.error = null;
       })
 
